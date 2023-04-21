@@ -1,5 +1,11 @@
-import { experiments } from 'webpack';
-import Character, {Bowerman, Swordsman, Magician, Daemon, Undead, Zombie} from '../index'
+import Character from '../Character'
+import Bowerman from '../Bowerman'
+import Swordsman from '../Swordsman'
+import Magician from '../Magician'
+import Undead from '../Undead'
+import Daemon from '../Daemon'
+import Zombie from '../Zombie'
+
 
 test.each([
     [new Character('Alex', 'Bowerman'), {name: 'Alex', type: 'Bowerman', health: 100, level: 1, attack: 25, defence: 25}],
