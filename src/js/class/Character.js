@@ -1,35 +1,24 @@
 export default class Character {
     constructor(name, type){
-        let heroClassWithParam = {
-            Bowerman: {attack: 25, defence: 25},
-            Swordsman: {attack: 40, defence: 10},
-            Magician: {attack: 10, defence: 40},
-            Daemon: {attack: 10, defence: 40},
-            Undead: {attack: 25, defence: 25},
-            Zombie: {attack: 40, defence: 10}
+        const types = ['Bowerman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Zombie']
+        
+        if (!types.includes(type)) {
+            throw new Error(`The type "${type}" is wrong`)
         }
-
         if (name.length < 2 || name.length > 10) {
-            // let param = 
             throw new Error(`The name "${name}" is ${name.length < 2 ? 'short':'long'}`)
         }
 
         this.name = name
-        let heroParams = heroClassWithParam[type]
 
-        if (heroParams){
-            this.type = type
-            this.health = 100
-            this.level = 1
-            this.attack = heroParams.attack
-            this.defence = heroParams.defence
-        } else {
-            throw new Error(`The type "${type}" is wrong`)
-        }
-        
+        this.type = type
+        this.health = 100
+        this.level = 1
+        this.attack = 10
+        this.defence = 10
     }
     
-    levelUp =  function () {
+    levelUp() {
         if (this.health > 0) {
             this.level ++
             this.attack *= 1.2
@@ -40,7 +29,7 @@ export default class Character {
         }
     }
 
-    dealDamage = function (points, character) {
+    dealDamage(points, character) {
         if (character instanceof Character)  {
             character.health -= points * (1 - character.defence / 100)
         } else {
@@ -48,3 +37,15 @@ export default class Character {
         }
     }
 }
+
+// 3. решение с конструкцией heroClassWithParam продиктовано ТЗ к Задаче, если это не правильный подход
+// для решения задачи из ТЗ, то просто условие сформировао не однозначно. В целом я согласен с вами, что предложенное
+// решение правильно для выполнения если использовать логику наследования и расширения базового класса
+
+// 4. непонятно зачем нам вообще проверять типы в базовом классе, если у нас есть дочерние, создающие персонажей нужных классов, то есть
+// если разработчику потребуется ввести новый тип персонажа в игре, он создаст новый класс на основе базового, но ок, сделаю как вы просите,
+// а если будет лень или то будет считаться збыточным, например данного класса предусмотрен всего один NPC в игре, то он просто создаст
+// такого персонажа через Character. Но ок сделаю так как просите, мыж за зачеты боремся а не за логику.
+
+// 5. про функцию dealDamage вы видимо не поняли как реализован метод, он вызвается у того экземпляра класса кто наносит урон, а
+// в контекст передаются очки урони и экземпляр класса которому наносится урон, считаю тут все реализовано верно
